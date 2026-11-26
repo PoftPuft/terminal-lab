@@ -56,7 +56,7 @@ const MISSIONS = [
         textKey: 'obj2_2',
         validate: (cmd, args, state) => {
           const parts = cmd.trim().split(/\s+/);
-          return parts[0] === 'cd' && parts[1] && (parts[1] === '..' || parts[1] === '../..');
+          return parts[0] === 'cd' && parts[1] && parts[1].startsWith('..');
         },
         onComplete: (state) => {
           state.fs.cwd = '/home/user';
