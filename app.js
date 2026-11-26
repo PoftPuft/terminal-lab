@@ -370,7 +370,15 @@ function scrollToBottom() {
 }
 
 function focusInput() {
-  DOM.cmdInput.focus();
+  // Tenta focar múltiplas vezes para garantir (fix GitHub Pages timing)
+  const tryFocus = () => {
+    if (DOM.cmdInput && document.activeElement !== DOM.cmdInput) {
+      DOM.cmdInput.focus({ preventScroll: true });
+    }
+  };
+  tryFocus();
+  setTimeout(tryFocus, 50);
+  setTimeout(tryFocus, 200);
 }
 
 // ============================================================================
