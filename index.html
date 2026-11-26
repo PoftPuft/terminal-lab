@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terminal Mastery Lab - Learn command line through interactive missions">
+  <title>Terminal Mastery Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">▲</span>
+        <span class="logo-text" data-i18n="appTitle">Terminal Mastery Lab</span>
+      </div>
+      <nav class="tabs" role="tablist" aria-label="Main navigation">
+        <button role="tab" class="tab active" data-tab="missions" aria-selected="true" data-i18n="tabMissions">Missions</button>
+        <button role="tab" class="tab" data-tab="guide" aria-selected="false" data-i18n="tabGuide">Survival Guide</button>
+        <button role="tab" class="tab" data-tab="profile" aria-selected="false" data-i18n="tabProfile">Profile</button>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="language-toggle" role="group" aria-label="Language selection">
+        <button class="lang-btn active" data-lang="pt" aria-pressed="true">PT</button>
+        <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <div class="xp-bar" aria-live="polite">
+        <span class="xp-label" data-i18n="xpLabel">XP</span>
+        <div class="xp-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div class="xp-fill" style="width: 0%"></div>
+        </div>
+        <span class="xp-text">0 / 100</span>
+        <span class="level-badge" data-i18n="levelNovice">Novice Level 1</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Missions Tab -->
+    <section role="tabpanel" id="missions-panel" class="panel active" aria-labelledby="missions-tab">
+      <div class="terminal-container">
+        <div class="terminal-header">
+          <div class="window-controls">
+            <span class="control close" aria-label="Close"></span>
+            <span class="control minimize" aria-label="Minimize"></span>
+            <span class="control maximize" aria-label="Maximize"></span>
+          </div>
+          <div class="terminal-title" data-i18n="terminalTitle">mast-lab:~$</div>
+        </div>
+
+        <div class="terminal-body" id="terminalBody">
+          <div class="output" id="output"></div>
+          <div class="input-line">
+            <span class="prompt" id="prompt">user@mast-lab:~$</span>
+            <input type="text" class="cmd-input" id="cmdInput" autocomplete="off" spellcheck="false" aria-label="Command input">
+            <span class="cursor" aria-hidden="true">█</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="mission-sidebar" aria-label="Current mission">
+        <div class="mission-card">
+          <div class="mission-header">
+            <span class="mission-badge" data-i18n="missionLabel">Mission</span>
+            <span class="mission-number">01</span>
+          </div>
+          <h2 class="mission-title" id="missionTitle" data-i18n="mission1Title">The First Login</h2>
+          <div class="mission-objectives" id="missionObjectives">
+            <div class="objective completed" data-objective="0">
+              <span class="obj-check" aria-hidden="true">✓</span>
+              <span class="obj-text" data-i18n="obj1_1">Use <kbd>pwd</kbd> to see current path</span>
+            </div>
+            <div class="objective" data-objective="1">
+              <span class="obj-check" aria-hidden="true">○</span>
+              <span class="obj-text" data-i18n="obj1_2">List files with <kbd>ls</kbd></span>
+            </div>
+          </div>
+          <div class="mission-reward">
+            <span class="reward-icon" aria-hidden="true">★</span>
+            <span class="reward-text" data-i18n="rewardText">+25 XP</span>
+          </div>
+        </div>
+
+        <div class="hint-box" id="hintBox" aria-live="polite">
+          <span class="hint-icon" aria-hidden="true">💡</span>
+          <span class="hint-text" data-i18n="hint1">Type commands to complete objectives. Press Tab for autocomplete.</span>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Guide Tab -->
+    <section role="tabpanel" id="guide-panel" class="panel" aria-labelledby="guide-tab" hidden>
+      <div class="guide-container">
+        <div class="guide-sidebar" aria-label="Guide categories">
+          <nav class="guide-nav">
+            <button class="guide-category active" data-category="basics" data-i18n="catBasics">Terminal Basics</button>
+            <button class="guide-category" data-category="prompt" data-i18n="catPrompt">Prompt Syntax</button>
+            <button class="guide-category" data-category="paths" data-i18n="catPaths">Paths</button>
+            <button class="guide-category" data-category="processes" data-i18n="catProcesses">Processes</button>
+            <button class="guide-category" data-category="scripts" data-i18n="catScripts">Scripts</button>
+            <button class="guide-category" data-category="perms" data-i18n="catPerms">Permissions</button>
+          </nav>
+        </div>
+        <div class="guide-content" id="guideContent" role="article">
+          <!-- Content injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Tab -->
+    <section role="tabpanel" id="profile-panel" class="panel" aria-labelledby="profile-tab" hidden>
+      <div class="profile-container">
+        <div class="profile-header">
+          <div class="avatar">
+            <span class="avatar-icon">◈</span>
+          </div>
+          <div class="profile-info">
+            <h2 class="username" id="username">terminal_novice</h2>
+            <div class="profile-stats">
+              <div class="stat">
+                <span class="stat-value" id="totalXP">0</span>
+                <span class="stat-label" data-i18n="statXP">Total XP</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value" id="missionsDone">0</span>
+                <span class="stat-label" data-i18n="statMissions">Missions</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value" id="commandsRun">0</span>
+                <span class="stat-label" data-i18n="statCommands">Commands</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="achievements" aria-label="Achievements">
+          <h3 data-i18n="achievementsTitle">Achievements</h3>
+          <div class="achievement-grid" id="achievementGrid">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+        <div class="progress-section">
+          <h3 data-i18n="progressTitle">Progress</h3>
+          <div class="progress-bars" id="progressBars">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="https://github.com" target="_blank" rel="noopener" class="footer-link" data-i18n="footerSource">View Source</a>
+      <span class="footer-divider" aria-hidden="true">|</span>
+      <a href="https://github.com" target="_blank" rel="noopener" class="footer-link" data-i18n="footerReport">Report Bug</a>
+      <span class="footer-divider" aria-hidden="true">|</span>
+      <span class="footer-credit" data-i18n="footerBuilt">Built with ♥ for terminal learners</span>
+    </div>
+    <div class="keyboard-hint" data-i18n="keyboardHint">Physical keyboard required for full interaction</div>
+  </footer>
+
+  <script src="data/i18n.js"></script>
+  <script src="data/missions.js"></script>
+  <script src="data/guide.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
