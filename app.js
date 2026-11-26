@@ -37,7 +37,7 @@ const State = {
   fs: {
     cwd: '/home/user',
     files: {
-      '/home/user': ['Desktop', 'Documents', 'Downloads', 'Music', 'Pictures', 'Videos'],
+      '/home/user': [],
       '/home/user/Documents': [],
       '/home/user/Downloads': []
     },
@@ -512,7 +512,9 @@ function executeCommand(baseCmd, args, rawCmd) {
       const path = args[0] ? resolvePath(args[0]) : State.fs.cwd;
       const files = State.fs.files[path] || [];
       const dirs = State.fs.dirs[path] || [];
-      const all = [...dirs.map(d => `<span style="color:var(--fg-info)">${d}/</span>`), ...files.map(f => f)];
+      // Filter out directories from files list to avoid duplicates
+      const onlyFiles = files.filter(f => !dirs.includes(f.replace('/', '')));
+      const all = [...dirs.map(d => `<span style="color:var(--fg-info)">${d}/</span>`), ...onlyFiles.map(f => f)];
       return { output: all.join('  ') || '(empty)', isSuccess: true };
 
     case 'cd':
@@ -520,7 +522,16 @@ function executeCommand(baseCmd, args, rawCmd) {
       const newPath = resolvePath(target);
 
       // Check if directory exists
-      if (State.fs.dirs[newPath] !== undefined || newPath === '/home/user' || newPath.startsWith('/home/user/')) {
+      let exists = false;
+      if (newPath === '/home/user') {
+        exists = true;
+      } else {
+        const parent = newPath.substring(0, newPath.lastIndexOf('/')) || '/';
+        const dirName = newPath.substring(newPath.lastIndexOf('/') + 1);
+        exists = State.fs.dirs[parent]?.includes(dirName) ?? false;
+      }
+
+      if (exists) {
         State.fs.cwd = newPath;
         return { output: '', isSuccess: true };
       } else {
