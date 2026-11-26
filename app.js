@@ -301,7 +301,7 @@ function renderProfile() {
   DOM.achievementGrid.innerHTML = ACHIEVEMENTS.map(ach => {
     const unlocked = State.unlockedAchievements.has(ach.id);
     return `
-      <div class="achievement ${unlocked ? 'unlocked : ''}" data-achievement="${ach.id}">
+      <div class="achievement ${unlocked ? 'unlocked' : ''}" data-achievement="${ach.id}">
         <span class="achievement-icon">${getAchievementIcon(ach.id)}</span>
         <span class="achievement-name">${t(ach.nameKey)}</span>
       </div>
